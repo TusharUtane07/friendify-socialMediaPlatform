@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
 	FaBookmark,
 	FaHome,
@@ -9,8 +10,41 @@ import {
 import { IoNotifications } from "react-icons/io5";
 import { MdMessage } from "react-icons/md";
 import Button from "../Button/button";
+import {
+	getAuth,
+	signOut as firebaseSignOut,
+	onAuthStateChanged,
+} from "firebase/auth";
+import app from "@/firebase/config";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
+	const [userName, setUserName] = useState<any>("");
+	const navigate = useRouter();
+
+	const auth = getAuth(app);
+	const handleSignOut = () => {
+		setUserName("");
+		firebaseSignOut(auth)
+			.then(() => {
+				console.log("Success Signing Out");
+				navigate.push("/login");
+			})
+			.catch((error) => {
+				console.log("error signing out: " + error.message);
+			});
+	};
+
+	useEffect(() => {
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				setUserName(user?.displayName);
+			} else {
+				console.log("User is not logged in");
+			}
+		});
+	}, []);
+
 	return (
 		<div className="hidden lg:flex  flex-col pt-10 items-center border-r-2 border-white/45 fixed w-1/4 h-screen ">
 			<div className="">
@@ -47,12 +81,24 @@ const Sidebar = () => {
 				Notifications
 			</div>
 			<div className="absolute bottom-3">
-				<div className="flex items-center justify-center text-2xl gap-3 ">
-					Hey, Tushar Utane
-				</div>
-				<div className="flex items-center justify-center text-xl gap-3 mt-1">
-					<Button btnName={"Logout"} />
-				</div>
+				{userName ? (
+					<>
+						<div className="flex items-center justify-center text-2xl gap-3 ">
+							Hey, {userName}
+						</div>
+						<div
+							className="flex items-center justify-center text-xl gap-3 mt-1"
+							onClick={handleSignOut}>
+							<Button btnName={"Logout"} />
+						</div>
+					</>
+				) : (
+					<div
+						className="flex items-center justify-center text-xl gap-3 mt-1"
+						onClick={() => navigate.push("/login")}>
+						<Button btnName={"Login"} />
+					</div>
+				)}
 			</div>
 		</div>
 	);

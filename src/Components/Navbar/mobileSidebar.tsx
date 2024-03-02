@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Button from "../Button/button";
@@ -12,9 +12,46 @@ import {
 } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import { MdMessage } from "react-icons/md";
+import {
+	getAuth,
+	signOut as firebaseSignOut,
+	onAuthStateChanged,
+} from "firebase/auth";
+import app from "@/firebase/config";
+import { useRouter } from "next/navigation";
 
 const MobileSidebar = () => {
+	const [userName, setUserName] = useState<any>("");
 	const [nav, setNav] = useState<boolean>(false);
+	const navigate = useRouter();
+
+	const auth = getAuth(app);
+	const handleSignOut = () => {
+		firebaseSignOut(auth)
+			.then(() => {
+				console.log("Success Signing Out");
+				navigate.push("/login");
+				setNav(!nav);
+			})
+			.catch((error) => {
+				console.log("error signing out: " + error.message);
+			});
+	};
+
+	useEffect(() => {
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				setUserName(user?.displayName);
+			} else {
+				console.log("User is not logged in");
+			}
+		});
+	}, []);
+
+	const handleClick = () => {
+		navigate.push("/login");
+		setNav(!nav);
+	};
 
 	return (
 		<div>
@@ -73,9 +110,24 @@ const MobileSidebar = () => {
 							<FaUser />
 							Profile
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
-							<Button btnName={"Logout"} />
-						</div>
+						{userName ? (
+							<>
+								<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+									Hey, {userName}
+								</div>
+								<div
+									className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+									onClick={handleSignOut}>
+									<Button btnName={"Logout"} />
+								</div>
+							</>
+						) : (
+							<div
+								className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+								onClick={handleClick}>
+								<Button btnName={"Login"} />
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
