@@ -35,10 +35,12 @@ const Login = (props: Props) => {
 	}, [auth, navigate]);
 
 	return (
-		<div className="">
-			Login
-			<div onClick={signIn}>
-				<Button btnName={"Login with Google"} />
+		<div className="lg:absolute top-0 left-0 w-screen h-screen">
+			<div className="lg:flex lg:flex-col justify-center items-center w-full h-full">
+				{/* <div className="text-3xl uppercase">Login</div> */}
+				<div onClick={signIn} className="mt-5">
+					<Button btnName={"Login with Google"} />
+				</div>
 			</div>
 		</div>
 	);

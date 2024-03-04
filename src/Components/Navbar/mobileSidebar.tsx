@@ -53,6 +53,11 @@ const MobileSidebar = () => {
 		setNav(!nav);
 	};
 
+	const navigateUser = (navigateTo: string) => {
+		navigate.push(navigateTo);
+		setNav(!nav);
+	};
+
 	return (
 		<div>
 			<div className="">
@@ -82,31 +87,45 @@ const MobileSidebar = () => {
 						<div className="text-2xl ml-3 mt-5 md:text-4xl md:ml-5 md:mt-5">
 							<span className="font-bold uppercase">Friendify</span>
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-20 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-20 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("/")}>
 							<FaHome />
 							Home
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("explore")}>
 							<FaSearch />
 							Explore
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("news")}>
 							<FaNewspaper />
 							News
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("messages")}>
 							<MdMessage />
 							Messages
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("bookmarks")}>
 							<FaBookmark />
 							Bookmarks
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("notifications")}>
 							<IoNotifications />
 							Notifications
 						</div>
-						<div className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10">
+						<div
+							className="text-center flex items-center gap-3 justify-center cursor-pointer mt-8 text-2xl md:text-3xl md:mt-10"
+							onClick={() => navigateUser("profile")}>
 							<FaUser />
 							Profile
 						</div>

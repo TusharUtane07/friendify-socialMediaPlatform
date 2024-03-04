@@ -19,11 +19,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${inter.className}`}>
-				<div className="lg:grid lg:grid-cols-4 border border-yellow-500">
+				<div className="lg:grid lg:grid-cols-4 ">
 					<div className="">
 						<Navbar />
 					</div>
-					<div className="lg:col-span-3 ml-2 pt-10 overflow-scroll h-screen">
+					<div className="lg:col-span-3 ml-2 overflow-scroll h-screen">
 						{children}
 					</div>
 				</div>

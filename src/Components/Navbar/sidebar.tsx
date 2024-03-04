@@ -40,7 +40,7 @@ const Sidebar = () => {
 			if (user) {
 				setUserName(user?.displayName);
 			} else {
-				console.log("User is not logged in");
+				navigate.push("/login");
 			}
 		});
 	}, []);
@@ -51,32 +51,46 @@ const Sidebar = () => {
 				<span className="font-bold text-5xl uppercase">Friendify</span>
 			</div>
 			<div className="w-full h-[1px] mt-8 bg-white/45"></div>
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-10">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-10"
+				onClick={() => navigate.push("/")}>
 				<FaHome />
 				Home
 			</div>
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5"
+				onClick={() => navigate.push("news")}>
 				<FaNewspaper />
 				News
 			</div>
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5"
+				onClick={() => navigate.push("profile")}>
 				<FaUser />
 				Profile
 			</div>
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5"
+				onClick={() => navigate.push("explore")}>
 				<FaSearch />
 				Explore
 			</div>
 
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5"
+				onClick={() => navigate.push("messages")}>
 				<MdMessage />
 				Messages
 			</div>
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5"
+				onClick={() => navigate.push("bookmarks")}>
 				<FaBookmark />
 				Bookmarks
 			</div>
-			<div className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5">
+			<div
+				className="cursor-pointer flex items-center justify-center text-2xl gap-3 mt-5"
+				onClick={() => navigate.push("notifications")}>
 				<IoNotifications />
 				Notifications
 			</div>
