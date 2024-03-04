@@ -16,6 +16,7 @@ interface Article {
 
 const News: React.FC = () => {
 	const [data, setData] = useState<Article[]>([]);
+	const [loading, setLoading] = useState<boolean>(true); // Add loading state
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const articlesPerPage: number = 10;
 
@@ -24,6 +25,7 @@ const News: React.FC = () => {
 	}, []);
 
 	const getNewsData = (): void => {
+		setLoading(true); // Set loading to true when fetching data
 		axios
 			.get<{ articles: Article[] }>(
 				`https://newsapi.org/v2/top-headlines?country=in&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`
@@ -34,6 +36,9 @@ const News: React.FC = () => {
 			})
 			.catch((error) => {
 				console.error("Error:", error);
+			})
+			.finally(() => {
+				setLoading(false); // Set loading to false after fetching data
 			});
 	};
 
@@ -53,15 +58,17 @@ const News: React.FC = () => {
 		indexOfLastArticle
 	);
 
-	const paginate = (pageNumber: number): void => setCurrentPage(pageNumber);
+	// const paginate = (pageNumber: number): void => setCurrentPage(pageNumber);
 
 	return (
 		<>
+			{" "}
 			<div className="mt-20 lg:mt-8 mb-8 text-center underline font-bold ">
 				<h1 className="text-xl md:text-2xl lg:text-4xl">
 					News: Top headlines in India.
 				</h1>
 			</div>
+			{loading && <div>Loading...</div>}
 			<div className="grid grid-cols-1 gap-4 mx-2 lg:grid-cols-2">
 				{currentArticles.map((item: Article, index: number) => (
 					<div
@@ -83,7 +90,6 @@ const News: React.FC = () => {
 					</div>
 				))}
 			</div>
-
 			<div className="flex justify-center mt-4">
 				<button
 					onClick={() => setCurrentPage(currentPage - 1)}
